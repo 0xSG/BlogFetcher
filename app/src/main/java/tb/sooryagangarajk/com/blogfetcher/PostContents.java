@@ -40,10 +40,13 @@ public class PostContents extends AppCompatActivity {
 
         tView.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onClick(View v) {
+            public void onClick(View v) {/*
                 Uri uriUrl = Uri.parse(url);
                 Intent launchBrowser = new Intent(Intent.ACTION_VIEW, uriUrl);
-                startActivity(launchBrowser);
+                startActivity(launchBrowser)*/;
+                Intent i =new Intent((PostContents.this),web_activity.class);
+                i.putExtra("url",url);
+                startActivity(i);
             }
         });
 
