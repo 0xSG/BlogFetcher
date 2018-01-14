@@ -44,8 +44,11 @@ public class MainActivity extends AppCompatActivity {
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 DataFish obj = data.get(position);
 
-                Intent i = new Intent(MainActivity.this, web_activity.class);
+                //Intent i = new Intent(MainActivity.this, web_activity.class);
+                Intent i = new Intent(MainActivity.this, PostContents.class);
                 i.putExtra("url", obj.postUrl);
+                i.putExtra("content", obj.dcontent);
+                i.putExtra("title", obj.dtitle);
                 startActivity(i);
             }
         });
@@ -149,7 +152,7 @@ public class MainActivity extends AppCompatActivity {
                     JSONObject json_data = js.getJSONObject(i);
                     DataFish fishData = new DataFish();
                     fishData.dtitle = json_data.getString("title");
-                    fishData.dcontent = json_data.getString("updated");
+                    fishData.dcontent = json_data.getString("content");
                     fishData.postUrl = json_data.getString("url");
                     data.add(fishData);
                 }
