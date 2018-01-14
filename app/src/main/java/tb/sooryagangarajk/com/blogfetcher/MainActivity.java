@@ -3,6 +3,8 @@ package tb.sooryagangarajk.com.blogfetcher;
 import android.app.ProgressDialog;
 import android.content.Intent;
 import android.os.AsyncTask;
+import android.os.Handler;
+import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
@@ -45,6 +47,18 @@ public class MainActivity extends AppCompatActivity {
         listView = (ListView) findViewById(R.id.listid);
 
 
+        final SwipeRefreshLayout mySwipeRefreshLayout=(SwipeRefreshLayout)findViewById(R.id.swiperefresh);
+        mySwipeRefreshLayout.setOnRefreshListener(
+                new SwipeRefreshLayout.OnRefreshListener() {
+                    @Override
+                    public void onRefresh() {
+
+                        new AsyncLogin().execute();
+                        mySwipeRefreshLayout.setRefreshing(false);
+
+                    }
+                }
+        );
 
 
 
