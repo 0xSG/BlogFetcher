@@ -16,7 +16,9 @@
         android:fontFamily="monospace"
         android:text="TextView"
         android:textAlignment="textStart"
-        android:textColor="@android:color/background_dark"
+        android:gravity="start"
+        android:textColor="#ffffff"
+
         android:textSize="18sp"
         android:textStyle="bold"
         app:layout_constraintEnd_toEndOf="parent"
