@@ -5,6 +5,7 @@ import android.content.Intent;
 import android.os.AsyncTask;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
@@ -34,7 +35,7 @@ public class MainActivity extends AppCompatActivity {
     public static ListView listView;
     public static CustomArrayAdapter customArrayAdapter;
     public static List<DataFish> data;
-
+    public static String pageUrl = "https://www.googleapis.com/blogger/v3/blogs/8565561961995222193/posts?key=AIzaSyAtIK6gZmB_kGyb54aGLKcVbJlMAXlPeAg";
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -42,13 +43,20 @@ public class MainActivity extends AppCompatActivity {
         getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN);
         setContentView(R.layout.activity_main);
         listView = (ListView) findViewById(R.id.listid);
+
+
+
+
+
+
+
         new AsyncLogin().execute();
         listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 DataFish obj = data.get(position);
 
-                //Intent i = new Intent(MainActivity.this, web_activity.class);
+
                 Intent i = new Intent(MainActivity.this, PostContents.class);
                 i.putExtra("url", obj.postUrl);
                 i.putExtra("content", obj.dcontent);
@@ -77,63 +85,32 @@ public class MainActivity extends AppCompatActivity {
 
         @Override
         protected String doInBackground(String... params) {
+
+
+                    //// S G K ////
+                    String pageCont="";
+            URL url = null;
             try {
-
-                url = new URL("http://atomtray.in/blogPosts.json");
-
+                url = new URL(pageUrl);
             } catch (MalformedURLException e) {
-                // TODO Auto-generated catch block
                 e.printStackTrace();
-                return e.toString();
             }
+            BufferedReader in = null;
             try {
-
-                // Setup HttpURLConnection class to send and receive data from php and mysql
-                conn = (HttpURLConnection) url.openConnection();
-                conn.setReadTimeout(READ_TIMEOUT);
-                conn.setConnectTimeout(CONNECTION_TIMEOUT);
-                conn.setRequestMethod("GET");
-
-
-                conn.setDoOutput(true);
-
-            } catch (IOException e1) {
-                // TODO Auto-generated catch block
-                e1.printStackTrace();
-                return e1.toString();
-            }
-
-            try {
-
-                int response_code = conn.getResponseCode();
-
-                // Check if successful connection made
-                if (response_code == HttpURLConnection.HTTP_OK) {
-
-                    // Read data sent from server
-                    InputStream input = conn.getInputStream();
-                    BufferedReader reader = new BufferedReader(new InputStreamReader(input));
-                    StringBuilder result = new StringBuilder();
-                    String line;
-
-                    while ((line = reader.readLine()) != null) {
-                        result.append(line);
-                    }
-
-                    // Pass data to onPostExecute method
-                    return (result.toString());
-
-                } else {
-
-                    return ("unsuccessful");
-                }
-
+                in = new BufferedReader(new InputStreamReader(url.openStream()));
             } catch (IOException e) {
                 e.printStackTrace();
-                return e.toString();
-            } finally {
-                conn.disconnect();
             }
+            String str;
+            try {
+                while ((str = in.readLine()) != null)
+                {
+                   pageCont+=str;
+                }
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+            return pageCont;
 
 
         }
