@@ -11,7 +11,7 @@
         android:id="@+id/tid"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:background="#282a2b"
+        android:background="#414141"
         android:text="TextView"
         android:textAlignment="center"
 
