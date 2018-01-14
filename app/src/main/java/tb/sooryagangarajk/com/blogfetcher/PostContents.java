@@ -37,6 +37,7 @@ public class PostContents extends AppCompatActivity {
 
         }
         contView.setMovementMethod(new ScrollingMovementMethod());
+
         tView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

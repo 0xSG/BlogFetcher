@@ -1,7 +1,10 @@
 package tb.sooryagangarajk.com.blogfetcher;
 
 import android.app.ProgressDialog;
+import android.content.Context;
 import android.content.Intent;
+import android.net.ConnectivityManager;
+import android.net.NetworkInfo;
 import android.os.AsyncTask;
 import android.os.Handler;
 import android.support.v4.widget.SwipeRefreshLayout;
@@ -38,6 +41,13 @@ public class MainActivity extends AppCompatActivity {
     public static CustomArrayAdapter customArrayAdapter;
     public static List<DataFish> data;
     public static String pageUrl = "https://www.googleapis.com/blogger/v3/blogs/8565561961995222193/posts?key=AIzaSyAtIK6gZmB_kGyb54aGLKcVbJlMAXlPeAg";
+
+    private boolean isNetworkAvailable() {
+        ConnectivityManager connectivityManager
+                = (ConnectivityManager) getSystemService(Context.CONNECTIVITY_SERVICE);
+        NetworkInfo activeNetworkInfo = connectivityManager.getActiveNetworkInfo();
+        return activeNetworkInfo != null && activeNetworkInfo.isConnected();
+    }
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -52,19 +62,21 @@ public class MainActivity extends AppCompatActivity {
                 new SwipeRefreshLayout.OnRefreshListener() {
                     @Override
                     public void onRefresh() {
-
+                        if(isNetworkAvailable())
                         new AsyncLogin().execute();
+                        else
+                            Toast.makeText(getApplicationContext(),"Connection not available",Toast.LENGTH_LONG).show();
                         mySwipeRefreshLayout.setRefreshing(false);
 
                     }
                 }
         );
 
+        if(isNetworkAvailable())
+            new AsyncLogin().execute();
+        else
+            Toast.makeText(getApplicationContext(),"Connection not available",Toast.LENGTH_LONG).show();
 
-
-
-
-        new AsyncLogin().execute();
         listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
