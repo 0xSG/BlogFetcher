@@ -1,6 +1,6 @@
 # BlogFetcher :globe_with_meridians:
 
-* This application fetches all blog posts.(Using Blogger api).
+* This application fetch all blog posts.(Using Blogger api).
 * Click on post titile to gives full content view.
 * Tap on the title to **Speak the contents**.Tap again to stop speaking.
 * Hold on the title to view the post in Webview (Which is another activity with progress bar in it).
