@@ -16,9 +16,7 @@ import android.view.WindowManager;
 import android.widget.AdapterView;
 import android.widget.ListView;
 import android.widget.Toast;
-import org.json.JSONArray;
-import org.json.JSONException;
-import org.json.JSONObject;
+
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
@@ -27,12 +25,18 @@ import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
+
+
 public class MainActivity extends AppCompatActivity {
-    public static ListView listView;
-    public static CustomArrayAdapter customArrayAdapter;
-    public static List<DataFish> data;
+
     public static String sgk;
+    public static ListView listView;
+    public static List<DataFish> data;
     public boolean doubleBackToExitPressedOnce = false;
+    public static CustomArrayAdapter customArrayAdapter;
     public static String pageUrl = "https://www.googleapis.com/blogger/v3/blogs/8565561961995222193/posts?key=AIzaSyAtIK6gZmB_kGyb54aGLKcVbJlMAXlPeAg";
 
     private boolean isNetworkAvailable() {
@@ -41,6 +45,7 @@ public class MainActivity extends AppCompatActivity {
         NetworkInfo activeNetworkInfo = connectivityManager.getActiveNetworkInfo();
         return activeNetworkInfo != null && activeNetworkInfo.isConnected();
     }
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -48,64 +53,61 @@ public class MainActivity extends AppCompatActivity {
         getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN);
         setContentView(R.layout.activity_main);
         listView = (ListView) findViewById(R.id.listid);
+        sgk = "//// ";
 
-        sgk="//// ";
-        final SwipeRefreshLayout mySwipeRefreshLayout=(SwipeRefreshLayout)findViewById(R.id.swiperefresh);
+        final SwipeRefreshLayout mySwipeRefreshLayout = (SwipeRefreshLayout) findViewById(R.id.swiperefresh);
         mySwipeRefreshLayout.setOnRefreshListener(
                 new SwipeRefreshLayout.OnRefreshListener() {
                     @Override
                     public void onRefresh() {
-                        if(isNetworkAvailable())
-                        new AsyncLogin().execute();
+                        if (isNetworkAvailable())
+                            new AsyncLogin().execute();
                         else
-                            Toast.makeText(getApplicationContext(),"Connection not available",Toast.LENGTH_LONG).show();
+                            Toast.makeText(getApplicationContext(), "Connection not available", Toast.LENGTH_LONG).show();
                         mySwipeRefreshLayout.setRefreshing(false);
-
                     }
                 }
         );
 
-        if(isNetworkAvailable())
+        if (isNetworkAvailable())
             new AsyncLogin().execute();
         else
-            Toast.makeText(getApplicationContext(),"Connection not available",Toast.LENGTH_LONG).show();
+            Toast.makeText(getApplicationContext(), "Connection not available", Toast.LENGTH_LONG).show();
 
         listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 DataFish obj = data.get(position);
-
-
                 Intent i = new Intent(MainActivity.this, PostContents.class);
                 i.putExtra("url", obj.postUrl);
                 i.putExtra("content", obj.dcontent);
                 i.putExtra("title", obj.dtitle);
                 startActivity(i);
             }
-        });sgk.concat("S G K ");
+        });
+        sgk.concat("S G K ");
 
     }
 
+
+
+
+
     private class AsyncLogin extends AsyncTask<String, String, String> {
+
         ProgressDialog pdLoading = new ProgressDialog(MainActivity.this);
 
         @Override
         protected void onPreExecute() {
             super.onPreExecute();
-
-
             pdLoading.setMessage("\tLoading...");
             pdLoading.setCancelable(false);
             pdLoading.show();
-
         }
 
         @Override
         protected String doInBackground(String... params) {
-
-
-                    //// S G K ////
-                    String pageCont="";
+            String pageCont = "";
             URL url = null;
             try {
                 url = new URL(pageUrl);
@@ -120,9 +122,8 @@ public class MainActivity extends AppCompatActivity {
             }
             String str;
             try {
-                while ((str = in.readLine()) != null)
-                {
-                   pageCont+=str;
+                while ((str = in.readLine()) != null) {
+                    pageCont += str;
                 }
             } catch (IOException e) {
                 e.printStackTrace();
@@ -167,6 +168,7 @@ public class MainActivity extends AppCompatActivity {
 
     }
 
+
     @Override
     public void onBackPressed() {
         if (doubleBackToExitPressedOnce) {
@@ -180,8 +182,9 @@ public class MainActivity extends AppCompatActivity {
         new Handler().postDelayed(new Runnable() {
 
             @Override
-            public void run() { sgk.concat("////");
-                doubleBackToExitPressedOnce=false;
+            public void run() {
+                sgk.concat("////");
+                doubleBackToExitPressedOnce = false;
             }
         }, 2000);
     }

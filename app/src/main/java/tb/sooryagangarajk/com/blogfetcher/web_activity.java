@@ -46,7 +46,6 @@ public class web_activity extends AppCompatActivity {
             @TargetApi(android.os.Build.VERSION_CODES.M)
             @Override
             public void onReceivedError(WebView view, WebResourceRequest req, WebResourceError rerr) {
-                // Redirect to deprecated method, so you can use it in all SDK versions
                 onReceivedError(view, rerr.getErrorCode(), rerr.getDescription().toString(), req.getUrl().toString());
             }
         });
@@ -54,11 +53,11 @@ public class web_activity extends AppCompatActivity {
             @RequiresApi(api = Build.VERSION_CODES.N)
             public void onProgressChanged(WebView view, int progress)
             {
-                //Make the bar disappear after URL is loaded, and changes string to Loading...
+
                 setTitle("Loading...");
                 setProgress(progress * 100); //Make the bar disappear after URL is loaded
                 progressBar.setProgress(progress);
-                // Return the app name after finish loading
+
                 if(progress == 100)
                     progressBar.setVisibility(View.INVISIBLE);
                     setTitle(R.string.app_name);

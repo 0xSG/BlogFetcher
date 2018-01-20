@@ -5,7 +5,7 @@ package tb.sooryagangarajk.com.blogfetcher;
  */
 
 class DataFish {
-  public String dtitle;
-  public String dcontent;
-  public String postUrl;
+    public String dtitle;
+    public String dcontent;
+    public String postUrl;
 }
