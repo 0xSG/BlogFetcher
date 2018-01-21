@@ -1,9 +1,9 @@
 # BlogFetcher :globe_with_meridians:
 
 * This application fetch all blog posts (Using [Blogger API v3](https://developers.google.com/blogger/)).
-* Click on post titile to gives full content view.
+* Click on the given headings provide full content view of that post.
 * Tap on the title to **Speak the contents**. Tap again to stop speaking.
-* Hold on the title to view the post in Webview (Which is another activity with progress bar in it).
+* Hold on the title to view the post in WebView (Which is another activity with progress bar in it).
 ### **Dependencies**
 * [Jsoup](https://jsoup.org) - [Dependencies](https://jsoup.org/download).
 * [Blogger API](https://developers.google.com/blogger/docs/3.0/using) - [Dependencies](https://developers.google.com/blogger/docs/3.0/api-lib/java) (Select GRADLE).
